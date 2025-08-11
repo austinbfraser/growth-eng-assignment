@@ -47,15 +47,16 @@ const getStyles = () => ({
     margin: 10px;
   `,
   stats: css`
-  margin-top: 20px;
+    margin-top: 20px;
   `,
   table: css`
-  border-collapse: collapse;
-  th,
-  td {
-    border: 1px solid lightgray;
-    padding: 5px;
-    text-align: left;}
+    border-collapse: collapse;
+    th,
+    td {
+      border: 1px solid lightgray;
+      padding: 5px;
+      text-align: left;
+    }
   `,
 });
 
@@ -76,9 +77,8 @@ function App() {
     }
   };
 
-  let last, slowest, fastest, average;
+  let slowest, fastest, average;
   if (results.length > 0) {
-    last = results[results.length - 1];
     const times = results.map((result) => result.executionTime);
     times.sort((a, b) => a - b);
     fastest = times[0];
