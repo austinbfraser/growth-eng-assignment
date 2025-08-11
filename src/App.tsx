@@ -63,11 +63,13 @@ function App() {
   let last, slowest, fastest, average;
   if (results.length > 0) {
     last = results[results.length - 1];
-    const times = results.map(result => result.executionTime);
+    const times = results.map((result) => result.executionTime);
     times.sort((a, b) => a - b);
     fastest = times[0];
     slowest = times[times.length - 1];
-    average = Math.floor(times.reduce((acc, curr) => acc + curr, 0) / times.length);
+    average = Math.floor(
+      times.reduce((acc, curr) => acc + curr, 0) / times.length
+    );
   }
 
   const s = getStyles();
@@ -77,6 +79,11 @@ function App() {
       <button className={s.button} onClick={() => handleOnClick()}>
         Get Last Location
       </button>
+      <div>
+        <div>Fastest: {fastest} ms </div>
+        <div>Slowest: {slowest} ms </div>
+        <div>Average: {average} ms </div>
+      </div>
       <table>
         <thead>
           <tr>
@@ -87,19 +94,16 @@ function App() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>{last?.timestamp}</td>
-            <td>{last?.address?.street}</td>
-            <td>{last?.address?.city}</td>
-            <td>{last?.executionTime}</td>
-          </tr>
+          {results.map((result) => (
+            <tr>
+              <td>{result.timestamp}</td>
+              <td>{result.address?.street}</td>
+              <td>{result.address?.city}</td>
+              <td>{result.executionTime}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
-      <div>
-        <div>Fastest: {fastest} ms </div>
-        <div>Slowest: {slowest} ms </div>
-        <div>Average: {average} ms </div>
-      </div>
     </div>
   );
 }
