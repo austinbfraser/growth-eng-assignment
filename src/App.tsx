@@ -103,7 +103,7 @@ function App() {
         <tbody>
           {results.map((result) => (
             <tr>
-              <td>{result.timestamp}</td>
+              <td>{new Date(result.timestamp).toISOString()}</td>
               <td>{result.address?.street}</td>
               <td>{result.address?.city}</td>
               <td>{result.executionTime}</td>
