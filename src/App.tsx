@@ -49,6 +49,14 @@ const getStyles = () => ({
   stats: css`
   margin-top: 20px;
   `,
+  table: css`
+  border-collapse: collapse;
+  th,
+  td {
+    border: 1px solid lightgray;
+    padding: 5px;
+    text-align: left;}
+  `,
 });
 
 function App() {
@@ -83,7 +91,7 @@ function App() {
       <button className={s.button} onClick={() => handleOnClick()}>
         Get Last Location
       </button>
-      <table>
+      <table className={s.table}>
         <thead>
           <tr>
             <th>Timestamp</th>
