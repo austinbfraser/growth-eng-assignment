@@ -1,27 +1,41 @@
-import React, { useState} from "react";
-import { css } from "@emotion/css";
+import React, { useState } from 'react';
+import { css } from '@emotion/css';
 
-import { fetchLastLocation } from "./backend/fetchLastLocations";
+import { fetchLastLocation } from './backend/fetchLastLocations';
+
+interface MockApiResponse {
+  address: {
+    street: string;
+    city: string;
+    id: string;
+  };
+}
+
+interface Result extends MockApiResponse {
+  timestamp: number;
+  executionTime: number;
+}
 
 // This is an example results data structure
-const results:any = [
-  {
-    timestamp: Date.now(),
-    address: {
-      street: "5th Ave",
-      city: "Random City"
-    },
-    executionTime: 900
-  },
-  {
-    timestamp: Date.now() + 2000,
-    address: {
-      street: "Main Road",
-      city: "New Town"
-    },
-    executionTime: 400
-  }
-];
+// const results: any = [
+//   {
+//     timestamp: Date.now(),
+//     address: {
+//       street: '5th Ave',
+//       city: 'Random City',
+//     },
+//     executionTime: 900,
+//   },
+//   {
+//     timestamp: Date.now() + 2000,
+//     address: {
+//       street: 'Main Road',
+//       city: 'New Town',
+//     },
+//     executionTime: 400,
+//   },
+// ];
+
 const getStyles = () => ({
   button: css`
     border: 1px solid black;
@@ -30,25 +44,29 @@ const getStyles = () => ({
   `,
   container: css`
     margin: 10px;
-  `
+  `,
 });
 
 function App() {
-  const [response, setResponse] = useState(results);
+  const [results, setResults] = useState<Result[]>([]);
 
   const handleOnClick = async () => {
     const timestamp = Date.now();
-
-    await fetchLastLocation().then(res => {
-      setResponse({timestamp, ...res})
-    })
-
+    const res = await fetchLastLocation();
+    const end = Date.now();
+    setResults((prev) => [
+      ...prev,
+      { timestamp, executionTime: end - timestamp, ...res },
+    ]);
   };
 
-  const s = getStyles()
+  const s = getStyles();
+
   return (
     <div className={s.container}>
-      <button className={s.button} onClick={() => handleOnClick()}>Get Last Location</button>
+      <button className={s.button} onClick={() => handleOnClick()}>
+        Get Last Location
+      </button>
       <table>
         <thead>
           <tr>
@@ -59,18 +77,18 @@ function App() {
           </tr>
         </thead>
         <tbody>
-            <tr>
-              <td>{response.timestamp}</td>
-              <td>{response?.address?.street}</td>
-              <td>{response?.address?.city}</td>
-              <td></td>
-            </tr>
+          <tr>
+            <td>{response.timestamp}</td>
+            <td>{response?.address?.street}</td>
+            <td>{response?.address?.city}</td>
+            <td></td>
+          </tr>
         </tbody>
       </table>
       <div>
-        <div>Fastest:  ms </div>
-        <div>Slowest:  ms </div>
-        <div>Average:  ms </div>
+        <div>Fastest: ms </div>
+        <div>Slowest: ms </div>
+        <div>Average: ms </div>
       </div>
     </div>
   );
