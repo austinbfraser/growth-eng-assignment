@@ -60,6 +60,11 @@ function App() {
     ]);
   };
 
+  let last;
+  if (results.length > 0) {
+    last = results[results.length - 1];
+  }
+
   const s = getStyles();
 
   return (
@@ -78,10 +83,10 @@ function App() {
         </thead>
         <tbody>
           <tr>
-            <td>{response.timestamp}</td>
-            <td>{response?.address?.street}</td>
-            <td>{response?.address?.city}</td>
-            <td></td>
+            <td>{last?.timestamp}</td>
+            <td>{last?.address?.street}</td>
+            <td>{last?.address?.city}</td>
+            <td>{last?.executionTime}</td>
           </tr>
         </tbody>
       </table>
