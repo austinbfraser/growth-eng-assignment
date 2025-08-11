@@ -41,9 +41,13 @@ const getStyles = () => ({
     border: 1px solid black;
     background: transparent;
     padding: 5px;
+    margin-bottom: 20px;
   `,
   container: css`
     margin: 10px;
+  `,
+  stats: css`
+  margin-top: 20px;
   `,
 });
 
@@ -79,11 +83,6 @@ function App() {
       <button className={s.button} onClick={() => handleOnClick()}>
         Get Last Location
       </button>
-      <div>
-        <div>Fastest: {fastest} ms </div>
-        <div>Slowest: {slowest} ms </div>
-        <div>Average: {average} ms </div>
-      </div>
       <table>
         <thead>
           <tr>
@@ -104,6 +103,11 @@ function App() {
           ))}
         </tbody>
       </table>
+      <div className={s.stats}>
+        <div>Fastest: {fastest} ms </div>
+        <div>Slowest: {slowest} ms </div>
+        <div>Average: {average} ms </div>
+      </div>
     </div>
   );
 }
