@@ -60,9 +60,14 @@ function App() {
     ]);
   };
 
-  let last;
+  let last, slowest, fastest, average;
   if (results.length > 0) {
     last = results[results.length - 1];
+    const times = results.map(result => result.executionTime);
+    times.sort((a, b) => a - b);
+    fastest = times[0];
+    slowest = times[times.length - 1];
+    average = Math.floor(times.reduce((acc, curr) => acc + curr, 0) / times.length);
   }
 
   const s = getStyles();
@@ -91,9 +96,9 @@ function App() {
         </tbody>
       </table>
       <div>
-        <div>Fastest: ms </div>
-        <div>Slowest: ms </div>
-        <div>Average: ms </div>
+        <div>Fastest: {fastest} ms </div>
+        <div>Slowest: {slowest} ms </div>
+        <div>Average: {average} ms </div>
       </div>
     </div>
   );
