@@ -63,13 +63,17 @@ function App() {
   const [results, setResults] = useState<Result[]>([]);
 
   const handleOnClick = async () => {
-    const timestamp = Date.now();
-    const res = await fetchLastLocation();
-    const end = Date.now();
-    setResults((prev) => [
-      ...prev,
-      { timestamp, executionTime: end - timestamp, ...res },
-    ]);
+    try {
+      const timestamp = Date.now();
+      const res = await fetchLastLocation();
+      const end = Date.now();
+      setResults((prev) => [
+        ...prev,
+        { timestamp, executionTime: end - timestamp, ...res },
+      ]);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   let last, slowest, fastest, average;
